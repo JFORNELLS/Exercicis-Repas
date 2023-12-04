@@ -4,17 +4,13 @@ pragma solidity ^0.8.20;
 import "lib/solmate/src/tokens/ERC20.sol";
 
 contract ForniToken is ERC20 {
-    /// @notice Emited when the contrat is deployed.
+
     event Genesis(address owner);
-    /// @notice Emited when he user mints tokens.    
     event Mint(address indexed to, uint amount);
-    /// @notice Emited when the user burns tokens.
     event Burn(address indexed user, uint256 amount);
 
 
-    /// @notice Thrown when the amount is 0.
     error Amount_Cannot_Be_0();
-    /// @notice Thrown when the caller is address 0.
     error Invalid_Address();
 
     address public immutable owner;
