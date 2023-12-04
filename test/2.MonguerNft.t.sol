@@ -68,7 +68,7 @@ contract MonguerNftTest is Test {
         // the functions will be called by alice.
         vm.startPrank(alice);
         // check if the amount sent is insuficient.
-        vm.expectRevert(MonguerNft.Insuficient_Amount_Sent.selector);
+        vm.expectRevert(MonguerNft.Incorrect_Amount_Sent.selector);
         m.mint{value: 0.5 ether}(alice);
         // check if the receptor address is valid.
         vm.expectRevert(MonguerNft.Invalid_Address.selector);
