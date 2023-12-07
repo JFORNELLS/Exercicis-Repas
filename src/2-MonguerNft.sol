@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.20;
 
+
+
+/// @notice ERC721 Token Implemeentation.
+
 contract MonguerNft {
     event Transfer(address indexed from, address to, uint256 tokenId);
     event Approval(address indexed from, address spender, uint256 tokenId);
@@ -142,8 +146,8 @@ contract MonguerNft {
 
     function burn(uint256 _tokenId) external {
         if (owners[_tokenId] != msg.sender) revert You_Are_Not_The_owner();
-        delete owners[_tokenId];
         balance[msg.sender]--;
+        delete owners[_tokenId];
         emit Burned(msg.sender, _tokenId);
     }
 
