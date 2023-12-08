@@ -34,6 +34,7 @@ contract BeansToken {
         uint256 amountPaid
     );
     event Burned(address indexed from, uint256 tokenId, uint256 amount);
+    event BatchBurned(address from, uint256[] tokenId, uint256[] amount);
 
     error Contract_Cannot_Receive_ERC1155_Tokens();
     error Fail_Sending_Tokens();
@@ -230,11 +231,11 @@ contract BeansToken {
             if (balanceOf[msg.sender][id] < amount)
                 revert Insuficient_Token_balance(i, amount);
             unchecked {
-                balanceOf[msg.sender][id] -= amount;
-                emit Burned(msg.sender, id, amount);
+                balanceOf[msg.sender][id] -= amount;             
                 i++;
             }
         }
+        emit BatchBurned(msg.sender, _tokenIds, _amounts);
     }
 
     function setApprovalFotAll(address _operator, bool _approved) external {

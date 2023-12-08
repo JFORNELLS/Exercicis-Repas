@@ -75,6 +75,7 @@ contract BeansTokenTest is Test {
         uint256 amountPaid
     );
     event Burned(address indexed from, uint256 tokenId, uint256 amount);
+    event BatchBurned(address from, uint256[] tokenId, uint256[] amount);
 
     CanReceivedERC1155 public yes;
     CannotReceiveERC115Tokens public no;
@@ -283,6 +284,9 @@ contract BeansTokenTest is Test {
             )
         );
         b.batchBurn(_ids, insuficientBalance);
+        // Check tha event emited is correct.
+        vm.expectEmit();
+        emit BatchBurned(alice, _ids, suficientBalance);
         // Alice burns tokens of differents ids.
         b.batchBurn(_ids, suficientBalance);
         // Check that that differnts balnce are correct.
