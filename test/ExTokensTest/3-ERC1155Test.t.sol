@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {Test, console2} from "forge-std/Test.sol";
-import {BeansToken} from "../src/ERC1155.sol";
+import {BeansToken} from "src/ExTokens/3-ERC1155.sol";
 
 contract CanReceivedERC1155 {
     function onERC1155Received(
@@ -269,7 +269,7 @@ contract BeansTokenTest is Test {
         // If the amount is 0. it will revert.
         vm.expectRevert(
             abi.encodeWithSelector(
-                BeansToken.The_Amount_Canoot_Be_0.selector,
+                BeansToken.The_Amount_Cannot_Be_0.selector,
                 2,
                 0
             )
@@ -317,7 +317,7 @@ contract BeansTokenTest is Test {
         vm.stopPrank();
         // Bob tries to move all Alice's tokens, if it is not approved, it will revert
         vm.prank(bob);
-        vm.expectRevert(BeansToken.You_Are_Not_Apprved.selector);
+        vm.expectRevert(BeansToken.You_Are_Not_Approved.selector);
         b.safeTransferFrom(alice, joan, 13, 10, "");
         // Alice approves of Bob moving his tokens.
         vm.prank(alice);
@@ -371,7 +371,7 @@ contract BeansTokenTest is Test {
         vm.startPrank(alice);
         vm.expectRevert(
             abi.encodeWithSelector(
-                BeansToken.The_Amount_Canoot_Be_0.selector,
+                BeansToken.The_Amount_Cannot_Be_0.selector,
                 2,
                 0
             )

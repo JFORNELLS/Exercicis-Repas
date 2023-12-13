@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {Test, console2} from "forge-std/Test.sol";
-import {MonguerNft} from "../src/2-MonguerNft.sol";
+import {MonguerNft} from "src/Extokens/2-ERC721.sol";
 
 contract CannotReceiveNFT {}
 

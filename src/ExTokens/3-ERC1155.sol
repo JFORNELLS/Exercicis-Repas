@@ -40,14 +40,14 @@ contract BeansToken {
     error Fail_Sending_Tokens();
     error You_are_Not_The_Owner();
     error Invalid_Address();
-    error You_Are_Not_Apprved();
+    error You_Are_Not_Approved();
     error Insuficient_Tokens_balance();
     error Insuficient_Token_balance(uint256, uint256);
     error Ids_And_balances_Dont_Match();
     error Address_And_Values_Dont_Match();
     error Incorrect_Value_Sent();
     error Amount_Canoot_Be_0();
-    error The_Amount_Canoot_Be_0(uint256, uint256);
+    error The_Amount_Cannot_Be_0(uint256, uint256);
     error Invalid_Id_Token();
     error Ids_And_Amount_Dont_Match();
     error Exceeded_Max_Tokens();
@@ -110,7 +110,7 @@ contract BeansToken {
             }
         } else {
             if (!isApprovalForAll[_from][msg.sender])
-                revert You_Are_Not_Apprved();
+                revert You_Are_Not_Approved();
             unchecked {
                 balanceOf[_from][_tokenId] -= _value;
                 balanceOf[_to][_tokenId] += _value;
@@ -139,7 +139,7 @@ contract BeansToken {
         for (uint256 i; i < idsLength; ) {
             id = _ids[i];
             value = _values[i];
-            if (value == 0) revert The_Amount_Canoot_Be_0(i, value);
+            if (value == 0) revert The_Amount_Cannot_Be_0(i, value);
             if (balanceOf[_from][id] < value)
                 revert Insuficient_Token_balance(i, value);
             if (msg.sender == _from) {
@@ -150,7 +150,7 @@ contract BeansToken {
                 }
             } else {
                 if (!isApprovalForAll[_from][msg.sender])
-                    revert You_Are_Not_Apprved();
+                    revert You_Are_Not_Approved();
                 unchecked {
                     balanceOf[_from][id] -= value;
                     balanceOf[_to][id] += value;
@@ -227,7 +227,7 @@ contract BeansToken {
         for (uint256 i; i < amountsLength; ) {
             id = _tokenIds[i];
             amount = _amounts[i];
-            if (amount == 0) revert The_Amount_Canoot_Be_0(i, amount);
+            if (amount == 0) revert The_Amount_Cannot_Be_0(i, amount);
             if (balanceOf[msg.sender][id] < amount)
                 revert Insuficient_Token_balance(i, amount);
             unchecked {

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
-import {ForniToken} from "../src/1-ForniToken.sol";
+import {ForniToken} from "src/ExTokens/1-ERC20.sol";
 
 contract ForniTokenTest is Test {
 
