@@ -4,8 +4,6 @@ pragma solidity 0.8.19;
 
 contract Proxy {
 
-    event Upgraded(address indexed newImplentation);
-
     error YouAreNotOwner();
     error DelegatecallFailed();
     error IsNotNewImplementation();
@@ -29,7 +27,6 @@ contract Proxy {
         if (_newImplementation == implementation) revert IsNotNewImplementation();
         if (!_isContract(_newImplementation)) revert IsNotAContract();
         implementation = _newImplementation;
-        emit Upgraded(_newImplementation);
     }
 
     fallback() external {

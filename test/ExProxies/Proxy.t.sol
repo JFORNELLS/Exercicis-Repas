@@ -2,9 +2,9 @@
 pragma solidity 0.8.19;
 
 import {Test, console} from "forge-std/Test.sol";
-import {Proxy} from "src/Proxies/1-Proxy.sol";
-import {ImplementacionV1} from "src/Proxies/1-CalculatorV1.sol";
-import {ImplementacionV2} from "src/Proxies/1-CalculatorV2.sol";
+import {Proxy} from "src/ExProxies/1-Proxy.sol";
+import {ImplementacionV1} from "src/ExProxies/1-CalculatorV1.sol";
+import {ImplementacionV2} from "src/ExProxies/1-CalculatorV2.sol";
 
 contract ProxyTest is Test {
     ImplementacionV1 public implementacionV1;
