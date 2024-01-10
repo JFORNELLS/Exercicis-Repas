@@ -2,7 +2,6 @@
 pragma solidity ^0.8.20;
 
 contract RecibirEtherReceive {
-
     event Deposited(address indexed depositer, uint256 amount);
     event Withdrawn(address to, uint256 amount);
 
@@ -39,5 +38,4 @@ contract RecibirEtherReceive {
         balances[msg.sender] += msg.value;
         emit Deposited(msg.sender, msg.value);
     }
-
 }

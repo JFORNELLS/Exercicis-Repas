@@ -5,7 +5,6 @@ import {Test, console} from "forge-std/Test.sol";
 import {RecibirEtherPayable} from "src/ExTransferencies/1-RecibirEtherPayable.sol";
 
 contract RecibirEtherPayableTest is Test {
-
     event Deposited(address indexed depositor, uint256 amount);
 
     RecibirEtherPayable public recibir;
@@ -48,4 +47,4 @@ contract RecibirEtherPayableTest is Test {
         vm.expectRevert(RecibirEtherPayable.MaxBalanceReached.selector);
         recibir.recibirEther{value: 10 ether}();
     }
-}    
+}
