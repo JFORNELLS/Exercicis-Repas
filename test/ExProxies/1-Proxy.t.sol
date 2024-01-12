@@ -39,28 +39,30 @@ contract ProxyTest is Test {
 
         // I call the addition function, and the proxy redirects it to implementationV2, 
         // updates the proxy's storage, and checks the variable in the proxy
-        (bool success, ) = address(proxy).call(
+        (bool success, bytes memory data) = address(proxy).call(
             abi.encodeWithSignature("addition(uint256,uint256)", 2, 2)
         );
-        uint256 result = uint256(vm.load(address(proxy), bytes32(uint256(1))));
+        uint256 result = uint256(bytes32(data));
         assertEq(result, 4);
 
-        (bool success1, ) = address(proxy).call(
+        (bool success1, bytes memory data1) = address(proxy).call(
             abi.encodeWithSignature("substraction(uint256,uint256)", 555, 333)
         );
-        uint256 result1 = uint256(vm.load(address(proxy), bytes32(uint256(1))));
+        uint256 result1 = uint256(bytes32(data1));
         assertEq(result1, 222);
 
-        (bool success2, ) = address(proxy).call(
+        (bool success2, bytes memory data2) = address(proxy).call(
             abi.encodeWithSignature("multiplication(uint256,uint256)", 10, 787)
         );
-        uint256 result2 = uint256(vm.load(address(proxy), bytes32(uint256(1))));
+        uint256 result2 = uint256(bytes32(data2));                                                
         assertEq(result2, 7870);
 
-        (bool success3, ) = address(proxy).call(
+        (bool success3, bytes memory data3) = address(proxy).call(
             abi.encodeWithSignature("division(uint256,uint256)", 200, 4)
         );
-        uint256 result3 = uint256(vm.load(address(proxy), bytes32(uint256(1))));
+        uint256 result3 = uint256(bytes32(data3));
         assertEq(result3, 50);
     }
 }
+
+

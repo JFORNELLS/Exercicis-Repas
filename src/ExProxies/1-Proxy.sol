@@ -1,5 +1,4 @@
 //SPDX-License-Identifier: MIT
-
 pragma solidity 0.8.19;
 
 contract Proxy {
@@ -29,9 +28,12 @@ contract Proxy {
         implementation = _newImplementation;
     }
 
-    fallback() external {
-        (bool success, ) = implementation.delegatecall(msg.data);
+    fallback() external  {
+        (bool success, bytes memory data) = implementation.delegatecall(msg.data);
         if (!success) revert DelegatecallFailed();
+        assembly {
+            return(add(data, 0x20), mload(data))
+        }
     }
 
     function _isContract(address _newImplementation) internal view returns (bool) {
