@@ -2,21 +2,18 @@
 pragma solidity 0.8.20;
 
 import "lib/openzeppelin-contracts/contracts/proxy/utils/UUPSUpgradeable.sol";
-
-contract ImplementacionV2 is UUPSUpgradeable {
+import "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol";
+contract ImplementacionV2 is UUPSUpgradeable, Initializable {
 
     error YouAreNotOwner();
     error IsNotNewImplementation();
     error IsNotAContract();
 
     
-    address public immutable owner;
+    address public owner;
     address public addrThis;
     uint256 public result;
 
-    constructor() {
-        owner = msg.sender;
-    }
 
     modifier onlyOwner() {
         if (msg.sender != owner) revert YouAreNotOwner();
@@ -46,6 +43,14 @@ contract ImplementacionV2 is UUPSUpgradeable {
     function division(uint256 a, uint256 b) external returns (uint256) {
         return result = a / b;
     }
+
+    function setAddrThis(address _addrThis) public onlyOwner {
+        addrThis = _addrThis;
+    }
+
+    function getImplementation() external view returns (address) {
+        return addrThis;
+    }    
 
     function _authorizeUpgrade(
         address _newImplementation

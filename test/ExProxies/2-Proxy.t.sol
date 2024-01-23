@@ -18,17 +18,19 @@ contract Proxy2Test is Test {
         owner = makeAddr("owner");
         vm.startPrank(owner);
         implementacionV1 = new ImplementacionV1();
+        
+        bytes memory data = abi.encodeWithSignature("initialize()");
+        proxy = new Proxy2(address(implementacionV1), data);
+        (bool okis, ) = address(proxy).call(abi.encodeWithSignature("setAddrThis(address)", address(implementacionV1)));
+        require(okis, "");
 
-        proxy = new Proxy2(address(implementacionV1), "");
-        (bool ok, ) = address(proxy).call(
-            abi.encodeWithSignature("setAddrThis(address)", address(implementacionV1))
-        );
-
+     
         implementacionV2 = new ImplementacionV2();
         vm.stopPrank();
     }
 
     function test_A() public {
+
         // If the caller is not the owner it will revert.
         vm.expectRevert(ImplementacionV1.YouAreNotOwner.selector);
         (bool ok, ) = address(proxy).call(
@@ -38,7 +40,7 @@ contract Proxy2Test is Test {
         
         vm.startPrank(owner);
 
-        //If the new implementation isn't a contract, it will revert
+        // If the new implementation isn't a contract, it will revert
         vm.expectRevert(ImplementacionV1.IsNotAContract.selector);
         (bool ok1, ) = address(proxy).call(
             abi.encodeWithSignature("upgradeToAndCall(address,bytes)", owner, "")
@@ -52,9 +54,17 @@ contract Proxy2Test is Test {
         );     
         require(ok2, "");
 
-        // // The owner calls the function "upgradeToAndCall", and changes the new implentation.   
+        //If the caller of the "upgradeToAndCall" function is not the proxy, it will revert.
+        vm.expectRevert();
+        (bool okis, ) = address(implementacionV1).call(
+            abi.encodeWithSignature("upgradeToAndCall(address,bytes)", address(implementacionV1), "")
+        );     
+        require(okis, "");
+
+        bytes memory dates = abi.encodeWithSignature("setAddrThis(address)", address(implementacionV2));
+        // The owner calls the function "upgradeToAndCall", and changes the new implentation.   
         (bool ok3, ) = address(proxy).call(
-            abi.encodeWithSignature("upgradeToAndCall(address,bytes)", address(implementacionV2), "")
+            abi.encodeWithSignature("upgradeToAndCall(address,bytes)", address(implementacionV2), dates)
         );     
         require(ok3, "");
 
